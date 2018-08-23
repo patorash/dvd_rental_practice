@@ -1,0 +1,25 @@
+# == Schema Information
+#
+# Table name: actor
+#
+#  first_name  :string(45)       not null
+#  last_name   :string(45)       not null
+#  last_update :datetime         not null
+#  actor_id    :integer          not null, primary key
+#
+# Indexes
+#
+#  idx_actor_last_name  (last_name)
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  actor_id: 
+  first_name: MyString
+  last_name: MyString
+
+two:
+  actor_id: 
+  first_name: MyString
+  last_name: MyString

@@ -1,0 +1,18 @@
+# == Schema Information
+#
+# Table name: language
+#
+#  last_update :datetime         not null
+#  name        :string(20)       not null
+#  language_id :integer          not null, primary key
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  language_id: 
+  name: MyString
+
+two:
+  language_id: 
+  name: MyString

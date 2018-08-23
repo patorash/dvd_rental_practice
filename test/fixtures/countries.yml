@@ -1,0 +1,16 @@
+# == Schema Information
+#
+# Table name: country
+#
+#  country     :string(50)       not null
+#  last_update :datetime         not null
+#  country_id  :integer          not null, primary key
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  country: MyString
+
+two:
+  country: MyString
