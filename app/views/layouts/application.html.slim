@@ -45,4 +45,10 @@ html
                 classes << 'active' if current_page?(model_path)
               = link_to model.table_name, model_path, class: classes.join(' ')
         .col
+          - flash.each do |k, v|
+            - case k
+            - when 'primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark'
+              .alert class=("alert-#{k}") role='alert' = v
+            - else
+              .alert.alert-dark role='alert' = v
           = yield
