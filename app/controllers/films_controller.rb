@@ -3,7 +3,7 @@ class FilmsController < ApplicationController
 
   # GET /films
   def index
-    @films = Film.all
+    @films = Film.page params[:page]
   end
 
   # GET /films/1

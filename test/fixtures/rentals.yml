@@ -25,17 +25,17 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  rental_date: 2018-08-25 07:48:53
+  rental_date: 2018-08-25 08:45:09
   inventory: one
   customer: one
-  return_date: 2018-08-25 07:48:53
+  return_date: 2018-08-25 08:45:09
   staff: one
-  last_update: 2018-08-25 07:48:53
+  last_update: 2018-08-25 08:45:09
 
 two:
-  rental_date: 2018-08-25 07:48:53
+  rental_date: 2018-08-25 08:45:09
   inventory: two
   customer: two
-  return_date: 2018-08-25 07:48:53
+  return_date: 2018-08-25 08:45:09
   staff: two
-  last_update: 2018-08-25 07:48:53
+  last_update: 2018-08-25 08:45:09

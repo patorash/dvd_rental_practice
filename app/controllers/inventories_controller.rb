@@ -3,7 +3,7 @@ class InventoriesController < ApplicationController
 
   # GET /inventories
   def index
-    @inventories = Inventory.all
+    @inventories = Inventory.page params[:page]
   end
 
   # GET /inventories/1

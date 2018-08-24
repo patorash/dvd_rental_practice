@@ -3,7 +3,7 @@ class CustomersController < ApplicationController
 
   # GET /customers
   def index
-    @customers = Customer.all
+    @customers = Customer.page params[:page]
   end
 
   # GET /customers/1
