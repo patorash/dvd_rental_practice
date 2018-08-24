@@ -1,0 +1,14 @@
+table.table.table-bordered.table-striped
+  tbody
+    <%- attributes.reject(&:password_digest?).each do |attribute| -%>
+    tr
+      th.col-xs-3 scope='row'
+        = <%= attribute.human_name %>
+      td.col-xs-9
+        = @<%= singular_table_name %>.<%= attribute.name %>
+    <%- end -%>
+br
+
+= link_to 'Edit', edit_<%= singular_table_name %>_path(@<%= singular_table_name %>), class: 'btn btn-success'
+| &nbsp;
+= link_to 'Back', <%= index_helper %>_path, class: 'btn btn-secondary'
