@@ -1,0 +1,46 @@
+h1
+  | staffs
+
+table.table.table-bordered.table-striped.table-hover
+  thead
+    tr
+      th First name
+      th Last name
+      th Address
+      th Email
+      th Store
+      th Active
+      th Username
+      th Password
+      th Last update
+      th Picture
+      th
+      th
+      th
+
+  tbody
+    - @staffs.each do |staff|
+      tr
+        td = staff.first_name
+        td = staff.last_name
+        td = staff.address
+        td = staff.email
+        td = staff.store
+        td = staff.active
+        td = staff.username
+        td = staff.password
+        td = staff.last_update
+        td = staff.picture
+        td = link_to 'Show', staff, class: 'btn btn-info'
+        td = link_to 'Edit', edit_staff_path(staff), class: 'btn btn-success'
+        td
+          = link_to('Destroy', staff,
+                  method: :delete,
+                  remote: true,
+                  onclick: 'if(window.confirm("are you sure?")){$(this).closest("tr").fadeOut()}',
+                  data: {},
+                  class: 'btn btn-danger')
+
+br
+
+= link_to 'New', new_staff_path, class: ' btn btn-info'

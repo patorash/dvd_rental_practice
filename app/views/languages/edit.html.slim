@@ -1,0 +1,8 @@
+h1
+  | Editing Language
+
+= render 'form', language: @language
+br
+= link_to 'Show', @language, class: 'btn btn-info'
+| &nbsp;
+= link_to 'Back', languages_path, class: 'btn btn-secondary'

@@ -1,0 +1,8 @@
+h1
+  | Editing Store
+
+= render 'form', store: @store
+br
+= link_to 'Show', @store, class: 'btn btn-info'
+| &nbsp;
+= link_to 'Back', stores_path, class: 'btn btn-secondary'

@@ -1,0 +1,18 @@
+= form_with(model: country, local: true) do |form|
+  - if country.errors.any?
+    #error_explanation
+      h2
+        = pluralize(country.errors.count, "error")
+        | prohibited this country from being saved:
+
+      ul
+        - country.errors.full_messages.each do |message|
+          li = message
+
+  .form-group
+    = form.label :country
+    = form.text_field :country, id: :country_country, class: 'form-control'
+  .form-group
+    = form.label :last_update
+    = form.datetime_select :last_update, id: :country_last_update, class: 'form-control'
+  = form.submit class: 'btn btn-primary'

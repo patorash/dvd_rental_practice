@@ -1,0 +1,8 @@
+h1
+  | Editing Actor
+
+= render 'form', actor: @actor
+br
+= link_to 'Show', @actor, class: 'btn btn-info'
+| &nbsp;
+= link_to 'Back', actors_path, class: 'btn btn-secondary'

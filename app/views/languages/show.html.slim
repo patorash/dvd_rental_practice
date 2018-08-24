@@ -1,0 +1,15 @@
+table.table.table-bordered.table-striped
+  tbody
+    tr
+      th.col-xs-3 scope='row' Name
+      td.col-xs-9
+        = @language.name
+    tr
+      th.col-xs-3 scope='row' Last update
+      td.col-xs-9
+        = @language.last_update
+br
+
+= link_to 'Edit', edit_language_path(@language), class: 'btn btn-success'
+| &nbsp;
+= link_to 'Back', languages_path, class: 'btn btn-secondary'

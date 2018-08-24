@@ -12,16 +12,16 @@
   <%- attributes.each do |attribute| -%>
   <%- if attribute.password_digest? -%>
   .form-group
-    = form.label :password %>
+    = form.label :password
     = form.password_field :password, id: :<%= field_id(:password) %>, class: 'form-control'
   .form-group
-    = form.label :password_confirmation %>
+    = form.label :password_confirmation
     = form.password_field :password_confirmation, id: :<%= field_id(:password_confirmation) %>, class: 'form-control'
 
   <%- else -%>
   .form-group
-    = form.label :< %= attribute.column_name %>
-    = form.<%= attribute.field_type %> :<%= attribute.column_name %>, id: :< %= field_id(attribute.column_name) % >, class: 'form-control'
+    = form.label :<%= attribute.column_name %>
+    = form.<%= attribute.field_type %> :<%= attribute.column_name %>, id: :<%= field_id(attribute.column_name) %>, class: 'form-control'
   <%- end -%>
   <%- end -%>
   = form.submit class: 'btn btn-primary'

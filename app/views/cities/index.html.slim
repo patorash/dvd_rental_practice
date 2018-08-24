@@ -1,0 +1,32 @@
+h1
+  | cities
+
+table.table.table-bordered.table-striped.table-hover
+  thead
+    tr
+      th City
+      th Country
+      th Last update
+      th
+      th
+      th
+
+  tbody
+    - @cities.each do |city|
+      tr
+        td = city.city
+        td = city.country
+        td = city.last_update
+        td = link_to 'Show', city, class: 'btn btn-info'
+        td = link_to 'Edit', edit_city_path(city), class: 'btn btn-success'
+        td
+          = link_to('Destroy', city,
+                  method: :delete,
+                  remote: true,
+                  onclick: 'if(window.confirm("are you sure?")){$(this).closest("tr").fadeOut()}',
+                  data: {},
+                  class: 'btn btn-danger')
+
+br
+
+= link_to 'New', new_city_path, class: ' btn btn-info'

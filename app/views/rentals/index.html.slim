@@ -1,0 +1,38 @@
+h1
+  | rentals
+
+table.table.table-bordered.table-striped.table-hover
+  thead
+    tr
+      th Rental date
+      th Inventory
+      th Customer
+      th Return date
+      th Staff
+      th Last update
+      th
+      th
+      th
+
+  tbody
+    - @rentals.each do |rental|
+      tr
+        td = rental.rental_date
+        td = rental.inventory
+        td = rental.customer
+        td = rental.return_date
+        td = rental.staff
+        td = rental.last_update
+        td = link_to 'Show', rental, class: 'btn btn-info'
+        td = link_to 'Edit', edit_rental_path(rental), class: 'btn btn-success'
+        td
+          = link_to('Destroy', rental,
+                  method: :delete,
+                  remote: true,
+                  onclick: 'if(window.confirm("are you sure?")){$(this).closest("tr").fadeOut()}',
+                  data: {},
+                  class: 'btn btn-danger')
+
+br
+
+= link_to 'New', new_rental_path, class: ' btn btn-info'

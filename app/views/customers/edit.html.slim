@@ -1,0 +1,8 @@
+h1
+  | Editing Customer
+
+= render 'form', customer: @customer
+br
+= link_to 'Show', @customer, class: 'btn btn-info'
+| &nbsp;
+= link_to 'Back', customers_path, class: 'btn btn-secondary'

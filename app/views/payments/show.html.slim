@@ -1,0 +1,27 @@
+table.table.table-bordered.table-striped
+  tbody
+    tr
+      th.col-xs-3 scope='row' Customer
+      td.col-xs-9
+        = @payment.customer
+    tr
+      th.col-xs-3 scope='row' Staff
+      td.col-xs-9
+        = @payment.staff
+    tr
+      th.col-xs-3 scope='row' Rental
+      td.col-xs-9
+        = @payment.rental
+    tr
+      th.col-xs-3 scope='row' Amount
+      td.col-xs-9
+        = @payment.amount
+    tr
+      th.col-xs-3 scope='row' Payment date
+      td.col-xs-9
+        = @payment.payment_date
+br
+
+= link_to 'Edit', edit_payment_path(@payment), class: 'btn btn-success'
+| &nbsp;
+= link_to 'Back', payments_path, class: 'btn btn-secondary'

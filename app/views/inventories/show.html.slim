@@ -1,0 +1,19 @@
+table.table.table-bordered.table-striped
+  tbody
+    tr
+      th.col-xs-3 scope='row' Film
+      td.col-xs-9
+        = @inventory.film
+    tr
+      th.col-xs-3 scope='row' Store
+      td.col-xs-9
+        = @inventory.store
+    tr
+      th.col-xs-3 scope='row' Last update
+      td.col-xs-9
+        = @inventory.last_update
+br
+
+= link_to 'Edit', edit_inventory_path(@inventory), class: 'btn btn-success'
+| &nbsp;
+= link_to 'Back', inventories_path, class: 'btn btn-secondary'

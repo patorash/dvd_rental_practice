@@ -2,8 +2,7 @@ table.table.table-bordered.table-striped
   tbody
     <%- attributes.reject(&:password_digest?).each do |attribute| -%>
     tr
-      th.col-xs-3 scope='row'
-        = <%= attribute.human_name %>
+      th.col-xs-3 scope='row' <%= attribute.human_name %>
       td.col-xs-9
         = @<%= singular_table_name %>.<%= attribute.name %>
     <%- end -%>

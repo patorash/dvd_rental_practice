@@ -1,0 +1,21 @@
+= form_with(model: inventory, local: true) do |form|
+  - if inventory.errors.any?
+    #error_explanation
+      h2
+        = pluralize(inventory.errors.count, "error")
+        | prohibited this inventory from being saved:
+
+      ul
+        - inventory.errors.full_messages.each do |message|
+          li = message
+
+  .form-group
+    = form.label :film_id
+    = form.text_field :film_id, id: :inventory_film_id, class: 'form-control'
+  .form-group
+    = form.label :store_id
+    = form.text_field :store_id, id: :inventory_store_id, class: 'form-control'
+  .form-group
+    = form.label :last_update
+    = form.datetime_select :last_update, id: :inventory_last_update, class: 'form-control'
+  = form.submit class: 'btn btn-primary'

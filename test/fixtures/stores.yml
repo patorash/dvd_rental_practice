@@ -20,9 +20,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  manager_staff_id: 1
+  manager_staff: one
   address: one
+  last_update: 2018-08-25 07:49:01
 
 two:
-  manager_staff_id: 1
+  manager_staff: two
   address: two
+  last_update: 2018-08-25 07:49:01

@@ -1,0 +1,30 @@
+h1
+  | languages
+
+table.table.table-bordered.table-striped.table-hover
+  thead
+    tr
+      th Name
+      th Last update
+      th
+      th
+      th
+
+  tbody
+    - @languages.each do |language|
+      tr
+        td = language.name
+        td = language.last_update
+        td = link_to 'Show', language, class: 'btn btn-info'
+        td = link_to 'Edit', edit_language_path(language), class: 'btn btn-success'
+        td
+          = link_to('Destroy', language,
+                  method: :delete,
+                  remote: true,
+                  onclick: 'if(window.confirm("are you sure?")){$(this).closest("tr").fadeOut()}',
+                  data: {},
+                  class: 'btn btn-danger')
+
+br
+
+= link_to 'New', new_language_path, class: ' btn btn-info'

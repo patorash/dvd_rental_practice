@@ -1,0 +1,31 @@
+table.table.table-bordered.table-striped
+  tbody
+    tr
+      th.col-xs-3 scope='row' Rental date
+      td.col-xs-9
+        = @rental.rental_date
+    tr
+      th.col-xs-3 scope='row' Inventory
+      td.col-xs-9
+        = @rental.inventory
+    tr
+      th.col-xs-3 scope='row' Customer
+      td.col-xs-9
+        = @rental.customer
+    tr
+      th.col-xs-3 scope='row' Return date
+      td.col-xs-9
+        = @rental.return_date
+    tr
+      th.col-xs-3 scope='row' Staff
+      td.col-xs-9
+        = @rental.staff
+    tr
+      th.col-xs-3 scope='row' Last update
+      td.col-xs-9
+        = @rental.last_update
+br
+
+= link_to 'Edit', edit_rental_path(@rental), class: 'btn btn-success'
+| &nbsp;
+= link_to 'Back', rentals_path, class: 'btn btn-secondary'

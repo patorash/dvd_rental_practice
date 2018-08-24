@@ -33,18 +33,19 @@ html
 
     .container-fluid
       .row
-        .col.col-md-auto
+        .col-md-2
           ruby:
             model_names = ActiveRecord::Base.connection.tables.map(&:classify).sort
             models = model_names.map { |model_name| Object.const_get(model_name) rescue nil }.compact
           .list-group.list-group-flush
             - models.each do |model|
               ruby:
+                next if model.primary_key.nil?
                 model_path = eval("#{model.table_name.pluralize}_path")
                 classes = %w(list-group-item list-group-item-action)
                 classes << 'active' if current_page?(model_path)
               = link_to model.table_name, model_path, class: classes.join(' ')
-        .col
+        .col-md-10
           - flash.each do |k, v|
             - case k
             - when 'primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark'

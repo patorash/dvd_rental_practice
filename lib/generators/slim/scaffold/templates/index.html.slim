@@ -5,7 +5,7 @@ table.table.table-bordered.table-striped.table-hover
   thead
     tr
       <%- attributes.reject(&:password_digest?).each do |attribute| -%>
-      th = <%= attribute.human_name %>
+      th <%= attribute.human_name %>
       <%- end -%>
       th
       th
@@ -15,7 +15,7 @@ table.table.table-bordered.table-striped.table-hover
     - @<%= plural_table_name %>.each do |<%= singular_table_name %>|
       tr
         <%- attributes.reject(&:password_digest?).each do |attribute| -%>
-          td = <%= singular_table_name %>.<%= attribute.name %>
+        td = <%= singular_table_name %>.<%= attribute.name %>
         <%- end -%>
         td = link_to 'Show', <%= singular_table_name %>, class: 'btn btn-info'
         td = link_to 'Edit', edit_<%= singular_table_name %>_path(<%= singular_table_name %>), class: 'btn btn-success'

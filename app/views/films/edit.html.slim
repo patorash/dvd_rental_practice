@@ -1,0 +1,8 @@
+h1
+  | Editing Film
+
+= render 'form', film: @film
+br
+= link_to 'Show', @film, class: 'btn btn-info'
+| &nbsp;
+= link_to 'Back', films_path, class: 'btn btn-secondary'

@@ -1,0 +1,30 @@
+h1
+  | countries
+
+table.table.table-bordered.table-striped.table-hover
+  thead
+    tr
+      th Country
+      th Last update
+      th
+      th
+      th
+
+  tbody
+    - @countries.each do |country|
+      tr
+        td = country.country
+        td = country.last_update
+        td = link_to 'Show', country, class: 'btn btn-info'
+        td = link_to 'Edit', edit_country_path(country), class: 'btn btn-success'
+        td
+          = link_to('Destroy', country,
+                  method: :delete,
+                  remote: true,
+                  onclick: 'if(window.confirm("are you sure?")){$(this).closest("tr").fadeOut()}',
+                  data: {},
+                  class: 'btn btn-danger')
+
+br
+
+= link_to 'New', new_country_path, class: ' btn btn-info'

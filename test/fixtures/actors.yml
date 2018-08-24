@@ -15,11 +15,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  actor_id: 
   first_name: MyString
   last_name: MyString
+  last_update: 2018-08-25 07:48:12
 
 two:
-  actor_id: 
   first_name: MyString
   last_name: MyString
+  last_update: 2018-08-25 07:48:12

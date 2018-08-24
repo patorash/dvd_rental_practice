@@ -1,0 +1,44 @@
+h1
+  | customers
+
+table.table.table-bordered.table-striped.table-hover
+  thead
+    tr
+      th Store
+      th First name
+      th Last name
+      th Email
+      th Address
+      th Activebool
+      th Create date
+      th Last update
+      th Active
+      th
+      th
+      th
+
+  tbody
+    - @customers.each do |customer|
+      tr
+        td = customer.store
+        td = customer.first_name
+        td = customer.last_name
+        td = customer.email
+        td = customer.address
+        td = customer.activebool
+        td = customer.create_date
+        td = customer.last_update
+        td = customer.active
+        td = link_to 'Show', customer, class: 'btn btn-info'
+        td = link_to 'Edit', edit_customer_path(customer), class: 'btn btn-success'
+        td
+          = link_to('Destroy', customer,
+                  method: :delete,
+                  remote: true,
+                  onclick: 'if(window.confirm("are you sure?")){$(this).closest("tr").fadeOut()}',
+                  data: {},
+                  class: 'btn btn-danger')
+
+br
+
+= link_to 'New', new_customer_path, class: ' btn btn-info'

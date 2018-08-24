@@ -1,0 +1,8 @@
+h1
+  | Editing City
+
+= render 'form', city: @city
+br
+= link_to 'Show', @city, class: 'btn btn-info'
+| &nbsp;
+= link_to 'Back', cities_path, class: 'btn btn-secondary'

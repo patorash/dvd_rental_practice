@@ -1,0 +1,33 @@
+= form_with(model: address, local: true) do |form|
+  - if address.errors.any?
+    #error_explanation
+      h2
+        = pluralize(address.errors.count, "error")
+        | prohibited this address from being saved:
+
+      ul
+        - address.errors.full_messages.each do |message|
+          li = message
+
+  .form-group
+    = form.label :address
+    = form.text_field :address, id: :address_address, class: 'form-control'
+  .form-group
+    = form.label :address2
+    = form.text_field :address2, id: :address_address2, class: 'form-control'
+  .form-group
+    = form.label :district
+    = form.text_field :district, id: :address_district, class: 'form-control'
+  .form-group
+    = form.label :city_id
+    = form.text_field :city_id, id: :address_city_id, class: 'form-control'
+  .form-group
+    = form.label :postal_code
+    = form.text_field :postal_code, id: :address_postal_code, class: 'form-control'
+  .form-group
+    = form.label :phone
+    = form.text_field :phone, id: :address_phone, class: 'form-control'
+  .form-group
+    = form.label :last_update
+    = form.datetime_select :last_update, id: :address_last_update, class: 'form-control'
+  = form.submit class: 'btn btn-primary'

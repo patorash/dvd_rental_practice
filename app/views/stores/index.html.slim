@@ -1,0 +1,32 @@
+h1
+  | stores
+
+table.table.table-bordered.table-striped.table-hover
+  thead
+    tr
+      th Manager staff
+      th Address
+      th Last update
+      th
+      th
+      th
+
+  tbody
+    - @stores.each do |store|
+      tr
+        td = store.manager_staff
+        td = store.address
+        td = store.last_update
+        td = link_to 'Show', store, class: 'btn btn-info'
+        td = link_to 'Edit', edit_store_path(store), class: 'btn btn-success'
+        td
+          = link_to('Destroy', store,
+                  method: :delete,
+                  remote: true,
+                  onclick: 'if(window.confirm("are you sure?")){$(this).closest("tr").fadeOut()}',
+                  data: {},
+                  class: 'btn btn-danger')
+
+br
+
+= link_to 'New', new_store_path, class: ' btn btn-info'

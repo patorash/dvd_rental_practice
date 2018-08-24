@@ -1,0 +1,39 @@
+= form_with(model: customer, local: true) do |form|
+  - if customer.errors.any?
+    #error_explanation
+      h2
+        = pluralize(customer.errors.count, "error")
+        | prohibited this customer from being saved:
+
+      ul
+        - customer.errors.full_messages.each do |message|
+          li = message
+
+  .form-group
+    = form.label :store_id
+    = form.text_field :store_id, id: :customer_store_id, class: 'form-control'
+  .form-group
+    = form.label :first_name
+    = form.text_field :first_name, id: :customer_first_name, class: 'form-control'
+  .form-group
+    = form.label :last_name
+    = form.text_field :last_name, id: :customer_last_name, class: 'form-control'
+  .form-group
+    = form.label :email
+    = form.text_field :email, id: :customer_email, class: 'form-control'
+  .form-group
+    = form.label :address_id
+    = form.text_field :address_id, id: :customer_address_id, class: 'form-control'
+  .form-group
+    = form.label :activebool
+    = form.check_box :activebool, id: :customer_activebool, class: 'form-control'
+  .form-group
+    = form.label :create_date
+    = form.date_select :create_date, id: :customer_create_date, class: 'form-control'
+  .form-group
+    = form.label :last_update
+    = form.datetime_select :last_update, id: :customer_last_update, class: 'form-control'
+  .form-group
+    = form.label :active
+    = form.number_field :active, id: :customer_active, class: 'form-control'
+  = form.submit class: 'btn btn-primary'

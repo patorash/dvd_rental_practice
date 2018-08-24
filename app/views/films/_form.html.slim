@@ -1,0 +1,48 @@
+= form_with(model: film, local: true) do |form|
+  - if film.errors.any?
+    #error_explanation
+      h2
+        = pluralize(film.errors.count, "error")
+        | prohibited this film from being saved:
+
+      ul
+        - film.errors.full_messages.each do |message|
+          li = message
+
+  .form-group
+    = form.label :title
+    = form.text_field :title, id: :film_title, class: 'form-control'
+  .form-group
+    = form.label :description
+    = form.text_area :description, id: :film_description, class: 'form-control'
+  .form-group
+    = form.label :release_year
+    = form.number_field :release_year, id: :film_release_year, class: 'form-control'
+  .form-group
+    = form.label :language_id
+    = form.text_field :language_id, id: :film_language_id, class: 'form-control'
+  .form-group
+    = form.label :rental_duration
+    = form.number_field :rental_duration, id: :film_rental_duration, class: 'form-control'
+  .form-group
+    = form.label :rental_rate
+    = form.text_field :rental_rate, id: :film_rental_rate, class: 'form-control'
+  .form-group
+    = form.label :length
+    = form.number_field :length, id: :film_length, class: 'form-control'
+  .form-group
+    = form.label :replacement_cost
+    = form.text_field :replacement_cost, id: :film_replacement_cost, class: 'form-control'
+  .form-group
+    = form.label :rating
+    = form.text_field :rating, id: :film_rating, class: 'form-control'
+  .form-group
+    = form.label :last_update
+    = form.datetime_select :last_update, id: :film_last_update, class: 'form-control'
+  .form-group
+    = form.label :special_features
+    = form.text_area :special_features, id: :film_special_features, class: 'form-control'
+  .form-group
+    = form.label :fulltext
+    = form.text_field :fulltext, id: :film_fulltext, class: 'form-control'
+  = form.submit class: 'btn btn-primary'

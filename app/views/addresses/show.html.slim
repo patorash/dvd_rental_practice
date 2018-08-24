@@ -1,0 +1,35 @@
+table.table.table-bordered.table-striped
+  tbody
+    tr
+      th.col-xs-3 scope='row' Address
+      td.col-xs-9
+        = @address.address
+    tr
+      th.col-xs-3 scope='row' Address2
+      td.col-xs-9
+        = @address.address2
+    tr
+      th.col-xs-3 scope='row' District
+      td.col-xs-9
+        = @address.district
+    tr
+      th.col-xs-3 scope='row' City
+      td.col-xs-9
+        = @address.city
+    tr
+      th.col-xs-3 scope='row' Postal code
+      td.col-xs-9
+        = @address.postal_code
+    tr
+      th.col-xs-3 scope='row' Phone
+      td.col-xs-9
+        = @address.phone
+    tr
+      th.col-xs-3 scope='row' Last update
+      td.col-xs-9
+        = @address.last_update
+br
+
+= link_to 'Edit', edit_address_path(@address), class: 'btn btn-success'
+| &nbsp;
+= link_to 'Back', addresses_path, class: 'btn btn-secondary'

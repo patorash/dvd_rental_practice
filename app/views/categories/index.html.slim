@@ -1,0 +1,30 @@
+h1
+  | categories
+
+table.table.table-bordered.table-striped.table-hover
+  thead
+    tr
+      th Name
+      th Last update
+      th
+      th
+      th
+
+  tbody
+    - @categories.each do |category|
+      tr
+        td = category.name
+        td = category.last_update
+        td = link_to 'Show', category, class: 'btn btn-info'
+        td = link_to 'Edit', edit_category_path(category), class: 'btn btn-success'
+        td
+          = link_to('Destroy', category,
+                  method: :delete,
+                  remote: true,
+                  onclick: 'if(window.confirm("are you sure?")){$(this).closest("tr").fadeOut()}',
+                  data: {},
+                  class: 'btn btn-danger')
+
+br
+
+= link_to 'New', new_category_path, class: ' btn btn-info'

@@ -1,0 +1,32 @@
+h1
+  | actors
+
+table.table.table-bordered.table-striped.table-hover
+  thead
+    tr
+      th First name
+      th Last name
+      th Last update
+      th
+      th
+      th
+
+  tbody
+    - @actors.each do |actor|
+      tr
+        td = actor.first_name
+        td = actor.last_name
+        td = actor.last_update
+        td = link_to 'Show', actor, class: 'btn btn-info'
+        td = link_to 'Edit', edit_actor_path(actor), class: 'btn btn-success'
+        td
+          = link_to('Destroy', actor,
+                  method: :delete,
+                  remote: true,
+                  onclick: 'if(window.confirm("are you sure?")){$(this).closest("tr").fadeOut()}',
+                  data: {},
+                  class: 'btn btn-danger')
+
+br
+
+= link_to 'New', new_actor_path, class: ' btn btn-info'

@@ -1,0 +1,19 @@
+table.table.table-bordered.table-striped
+  tbody
+    tr
+      th.col-xs-3 scope='row' City
+      td.col-xs-9
+        = @city.city
+    tr
+      th.col-xs-3 scope='row' Country
+      td.col-xs-9
+        = @city.country
+    tr
+      th.col-xs-3 scope='row' Last update
+      td.col-xs-9
+        = @city.last_update
+br
+
+= link_to 'Edit', edit_city_path(@city), class: 'btn btn-success'
+| &nbsp;
+= link_to 'Back', cities_path, class: 'btn btn-secondary'

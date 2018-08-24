@@ -1,0 +1,15 @@
+table.table.table-bordered.table-striped
+  tbody
+    tr
+      th.col-xs-3 scope='row' Country
+      td.col-xs-9
+        = @country.country
+    tr
+      th.col-xs-3 scope='row' Last update
+      td.col-xs-9
+        = @country.last_update
+br
+
+= link_to 'Edit', edit_country_path(@country), class: 'btn btn-success'
+| &nbsp;
+= link_to 'Back', countries_path, class: 'btn btn-secondary'

@@ -32,17 +32,27 @@
 one:
   title: MyString
   description: MyText
-  release_year: 
+  release_year: 1
   language: one
   rental_duration: 1
   rental_rate: 9.99
   length: 1
+  replacement_cost: 9.99
+  rating: 
+  last_update: 2018-08-25 07:48:36
+  special_features: MyText
+  fulltext: 
 
 two:
   title: MyString
   description: MyText
-  release_year: 
+  release_year: 1
   language: two
   rental_duration: 1
   rental_rate: 9.99
   length: 1
+  replacement_cost: 9.99
+  rating: 
+  last_update: 2018-08-25 07:48:36
+  special_features: MyText
+  fulltext: 

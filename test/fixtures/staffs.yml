@@ -30,6 +30,7 @@ one:
   active: false
   username: MyString
   password: MyString
+  last_update: 2018-08-25 07:48:57
   picture: 
 
 two:
@@ -41,4 +42,5 @@ two:
   active: false
   username: MyString
   password: MyString
+  last_update: 2018-08-25 07:48:57
   picture: 

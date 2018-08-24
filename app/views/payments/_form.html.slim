@@ -1,0 +1,27 @@
+= form_with(model: payment, local: true) do |form|
+  - if payment.errors.any?
+    #error_explanation
+      h2
+        = pluralize(payment.errors.count, "error")
+        | prohibited this payment from being saved:
+
+      ul
+        - payment.errors.full_messages.each do |message|
+          li = message
+
+  .form-group
+    = form.label :customer_id
+    = form.text_field :customer_id, id: :payment_customer_id, class: 'form-control'
+  .form-group
+    = form.label :staff_id
+    = form.text_field :staff_id, id: :payment_staff_id, class: 'form-control'
+  .form-group
+    = form.label :rental_id
+    = form.text_field :rental_id, id: :payment_rental_id, class: 'form-control'
+  .form-group
+    = form.label :amount
+    = form.text_field :amount, id: :payment_amount, class: 'form-control'
+  .form-group
+    = form.label :payment_date
+    = form.datetime_select :payment_date, id: :payment_payment_date, class: 'form-control'
+  = form.submit class: 'btn btn-primary'

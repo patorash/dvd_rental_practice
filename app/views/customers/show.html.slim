@@ -1,0 +1,43 @@
+table.table.table-bordered.table-striped
+  tbody
+    tr
+      th.col-xs-3 scope='row' Store
+      td.col-xs-9
+        = @customer.store
+    tr
+      th.col-xs-3 scope='row' First name
+      td.col-xs-9
+        = @customer.first_name
+    tr
+      th.col-xs-3 scope='row' Last name
+      td.col-xs-9
+        = @customer.last_name
+    tr
+      th.col-xs-3 scope='row' Email
+      td.col-xs-9
+        = @customer.email
+    tr
+      th.col-xs-3 scope='row' Address
+      td.col-xs-9
+        = @customer.address
+    tr
+      th.col-xs-3 scope='row' Activebool
+      td.col-xs-9
+        = @customer.activebool
+    tr
+      th.col-xs-3 scope='row' Create date
+      td.col-xs-9
+        = @customer.create_date
+    tr
+      th.col-xs-3 scope='row' Last update
+      td.col-xs-9
+        = @customer.last_update
+    tr
+      th.col-xs-3 scope='row' Active
+      td.col-xs-9
+        = @customer.active
+br
+
+= link_to 'Edit', edit_customer_path(@customer), class: 'btn btn-success'
+| &nbsp;
+= link_to 'Back', customers_path, class: 'btn btn-secondary'

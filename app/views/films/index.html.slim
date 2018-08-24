@@ -1,0 +1,50 @@
+h1
+  | films
+
+table.table.table-bordered.table-striped.table-hover
+  thead
+    tr
+      th Title
+      th Description
+      th Release year
+      th Language
+      th Rental duration
+      th Rental rate
+      th Length
+      th Replacement cost
+      th Rating
+      th Last update
+      th Special features
+      th Fulltext
+      th
+      th
+      th
+
+  tbody
+    - @films.each do |film|
+      tr
+        td = film.title
+        td = film.description
+        td = film.release_year
+        td = film.language
+        td = film.rental_duration
+        td = film.rental_rate
+        td = film.length
+        td = film.replacement_cost
+        td = film.rating
+        td = film.last_update
+        td = film.special_features
+        td = film.fulltext
+        td = link_to 'Show', film, class: 'btn btn-info'
+        td = link_to 'Edit', edit_film_path(film), class: 'btn btn-success'
+        td
+          = link_to('Destroy', film,
+                  method: :delete,
+                  remote: true,
+                  onclick: 'if(window.confirm("are you sure?")){$(this).closest("tr").fadeOut()}',
+                  data: {},
+                  class: 'btn btn-danger')
+
+br
+
+= link_to 'New', new_film_path, class: ' btn btn-info'

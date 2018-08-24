@@ -1,0 +1,30 @@
+= form_with(model: rental, local: true) do |form|
+  - if rental.errors.any?
+    #error_explanation
+      h2
+        = pluralize(rental.errors.count, "error")
+        | prohibited this rental from being saved:
+
+      ul
+        - rental.errors.full_messages.each do |message|
+          li = message
+
+  .form-group
+    = form.label :rental_date
+    = form.datetime_select :rental_date, id: :rental_rental_date, class: 'form-control'
+  .form-group
+    = form.label :inventory_id
+    = form.text_field :inventory_id, id: :rental_inventory_id, class: 'form-control'
+  .form-group
+    = form.label :customer_id
+    = form.text_field :customer_id, id: :rental_customer_id, class: 'form-control'
+  .form-group
+    = form.label :return_date
+    = form.datetime_select :return_date, id: :rental_return_date, class: 'form-control'
+  .form-group
+    = form.label :staff_id
+    = form.text_field :staff_id, id: :rental_staff_id, class: 'form-control'
+  .form-group
+    = form.label :last_update
+    = form.datetime_select :last_update, id: :rental_last_update, class: 'form-control'
+  = form.submit class: 'btn btn-primary'

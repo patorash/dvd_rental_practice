@@ -1,0 +1,8 @@
+h1
+  | Editing Country
+
+= render 'form', country: @country
+br
+= link_to 'Show', @country, class: 'btn btn-info'
+| &nbsp;
+= link_to 'Back', countries_path, class: 'btn btn-secondary'

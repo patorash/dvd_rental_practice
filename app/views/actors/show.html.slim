@@ -1,0 +1,19 @@
+table.table.table-bordered.table-striped
+  tbody
+    tr
+      th.col-xs-3 scope='row' First name
+      td.col-xs-9
+        = @actor.first_name
+    tr
+      th.col-xs-3 scope='row' Last name
+      td.col-xs-9
+        = @actor.last_name
+    tr
+      th.col-xs-3 scope='row' Last update
+      td.col-xs-9
+        = @actor.last_update
+br
+
+= link_to 'Edit', edit_actor_path(@actor), class: 'btn btn-success'
+| &nbsp;
+= link_to 'Back', actors_path, class: 'btn btn-secondary'

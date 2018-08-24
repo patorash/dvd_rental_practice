@@ -33,6 +33,8 @@ one:
   email: MyString
   address: one
   activebool: false
+  create_date: 2018-08-25
+  last_update: 2018-08-25 07:48:32
   active: 1
 
 two:
@@ -42,4 +44,6 @@ two:
   email: MyString
   address: two
   activebool: false
+  create_date: 2018-08-25
+  last_update: 2018-08-25 07:48:32
   active: 1

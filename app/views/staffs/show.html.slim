@@ -1,0 +1,47 @@
+table.table.table-bordered.table-striped
+  tbody
+    tr
+      th.col-xs-3 scope='row' First name
+      td.col-xs-9
+        = @staff.first_name
+    tr
+      th.col-xs-3 scope='row' Last name
+      td.col-xs-9
+        = @staff.last_name
+    tr
+      th.col-xs-3 scope='row' Address
+      td.col-xs-9
+        = @staff.address
+    tr
+      th.col-xs-3 scope='row' Email
+      td.col-xs-9
+        = @staff.email
+    tr
+      th.col-xs-3 scope='row' Store
+      td.col-xs-9
+        = @staff.store
+    tr
+      th.col-xs-3 scope='row' Active
+      td.col-xs-9
+        = @staff.active
+    tr
+      th.col-xs-3 scope='row' Username
+      td.col-xs-9
+        = @staff.username
+    tr
+      th.col-xs-3 scope='row' Password
+      td.col-xs-9
+        = @staff.password
+    tr
+      th.col-xs-3 scope='row' Last update
+      td.col-xs-9
+        = @staff.last_update
+    tr
+      th.col-xs-3 scope='row' Picture
+      td.col-xs-9
+        = @staff.picture
+br
+
+= link_to 'Edit', edit_staff_path(@staff), class: 'btn btn-success'
+| &nbsp;
+= link_to 'Back', staffs_path, class: 'btn btn-secondary'

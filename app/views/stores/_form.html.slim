@@ -1,0 +1,21 @@
+= form_with(model: store, local: true) do |form|
+  - if store.errors.any?
+    #error_explanation
+      h2
+        = pluralize(store.errors.count, "error")
+        | prohibited this store from being saved:
+
+      ul
+        - store.errors.full_messages.each do |message|
+          li = message
+
+  .form-group
+    = form.label :manager_staff_id
+    = form.text_field :manager_staff_id, id: :store_manager_staff_id, class: 'form-control'
+  .form-group
+    = form.label :address_id
+    = form.text_field :address_id, id: :store_address_id, class: 'form-control'
+  .form-group
+    = form.label :last_update
+    = form.datetime_select :last_update, id: :store_last_update, class: 'form-control'
+  = form.submit class: 'btn btn-primary'

@@ -1,0 +1,36 @@
+h1
+  | payments
+
+table.table.table-bordered.table-striped.table-hover
+  thead
+    tr
+      th Customer
+      th Staff
+      th Rental
+      th Amount
+      th Payment date
+      th
+      th
+      th
+
+  tbody
+    - @payments.each do |payment|
+      tr
+        td = payment.customer
+        td = payment.staff
+        td = payment.rental
+        td = payment.amount
+        td = payment.payment_date
+        td = link_to 'Show', payment, class: 'btn btn-info'
+        td = link_to 'Edit', edit_payment_path(payment), class: 'btn btn-success'
+        td
+          = link_to('Destroy', payment,
+                  method: :delete,
+                  remote: true,
+                  onclick: 'if(window.confirm("are you sure?")){$(this).closest("tr").fadeOut()}',
+                  data: {},
+                  class: 'btn btn-danger')
+
+br
+
+= link_to 'New', new_payment_path, class: ' btn btn-info'

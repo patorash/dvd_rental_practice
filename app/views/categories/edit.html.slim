@@ -1,0 +1,8 @@
+h1
+  | Editing Category
+
+= render 'form', category: @category
+br
+= link_to 'Show', @category, class: 'btn btn-info'
+| &nbsp;
+= link_to 'Back', categories_path, class: 'btn btn-secondary'

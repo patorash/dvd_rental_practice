@@ -29,11 +29,11 @@ one:
   staff: one
   rental: one
   amount: 9.99
-  payment_date: 2018-08-23 16:49:21
+  payment_date: 2018-08-25 07:48:49
 
 two:
   customer: two
   staff: two
   rental: two
   amount: 9.99
-  payment_date: 2018-08-23 16:49:21
+  payment_date: 2018-08-25 07:48:49

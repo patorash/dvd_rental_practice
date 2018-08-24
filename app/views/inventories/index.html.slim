@@ -1,0 +1,32 @@
+h1
+  | inventories
+
+table.table.table-bordered.table-striped.table-hover
+  thead
+    tr
+      th Film
+      th Store
+      th Last update
+      th
+      th
+      th
+
+  tbody
+    - @inventories.each do |inventory|
+      tr
+        td = inventory.film
+        td = inventory.store
+        td = inventory.last_update
+        td = link_to 'Show', inventory, class: 'btn btn-info'
+        td = link_to 'Edit', edit_inventory_path(inventory), class: 'btn btn-success'
+        td
+          = link_to('Destroy', inventory,
+                  method: :delete,
+                  remote: true,
+                  onclick: 'if(window.confirm("are you sure?")){$(this).closest("tr").fadeOut()}',
+                  data: {},
+                  class: 'btn btn-danger')
+
+br
+
+= link_to 'New', new_inventory_path, class: ' btn btn-info'

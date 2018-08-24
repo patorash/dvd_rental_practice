@@ -1,0 +1,19 @@
+table.table.table-bordered.table-striped
+  tbody
+    tr
+      th.col-xs-3 scope='row' Manager staff
+      td.col-xs-9
+        = @store.manager_staff
+    tr
+      th.col-xs-3 scope='row' Address
+      td.col-xs-9
+        = @store.address
+    tr
+      th.col-xs-3 scope='row' Last update
+      td.col-xs-9
+        = @store.last_update
+br
+
+= link_to 'Edit', edit_store_path(@store), class: 'btn btn-success'
+| &nbsp;
+= link_to 'Back', stores_path, class: 'btn btn-secondary'

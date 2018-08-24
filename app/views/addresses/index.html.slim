@@ -1,0 +1,40 @@
+h1
+  | addresses
+
+table.table.table-bordered.table-striped.table-hover
+  thead
+    tr
+      th Address
+      th Address2
+      th District
+      th City
+      th Postal code
+      th Phone
+      th Last update
+      th
+      th
+      th
+
+  tbody
+    - @addresses.each do |address|
+      tr
+        td = address.address
+        td = address.address2
+        td = address.district
+        td = address.city
+        td = address.postal_code
+        td = address.phone
+        td = address.last_update
+        td = link_to 'Show', address, class: 'btn btn-info'
+        td = link_to 'Edit', edit_address_path(address), class: 'btn btn-success'
+        td
+          = link_to('Destroy', address,
+                  method: :delete,
+                  remote: true,
+                  onclick: 'if(window.confirm("are you sure?")){$(this).closest("tr").fadeOut()}',
+                  data: {},
+                  class: 'btn btn-danger')
+
+br
+
+= link_to 'New', new_address_path, class: ' btn btn-info'
