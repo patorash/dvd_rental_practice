@@ -1,0 +1,32 @@
+h1
+  | <%= plural_table_name %>
+
+table.table.table-bordered.table-striped.table-hover
+  thead
+    tr
+      <%- attributes.reject(&:password_digest?).each do |attribute| -%>
+      th = <%= attribute.human_name %>
+      <%- end -%>
+      th
+      th
+      th
+
+  tbody
+    - @<%= plural_table_name %>.each do |<%= singular_table_name %>|
+      tr
+        <%- attributes.reject(&:password_digest?).each do |attribute| -%>
+          td = <%= singular_table_name %>.<%= attribute.name %>
+        <%- end -%>
+        td = link_to 'Show', <%= singular_table_name %>, class: 'btn btn-info'
+        td = link_to 'Edit', edit_<%= singular_table_name %>_path(<%= singular_table_name %>), class: 'btn btn-success'
+        td
+          = link_to('Destroy', <%= singular_table_name %>,
+                  method: :delete,
+                  remote: true,
+                  onclick: 'if(window.confirm("are you sure?")){$(this).closest("tr").fadeOut()}',
+                  data: {},
+                  class: 'btn btn-danger')
+
+br
+
+= link_to 'New', new_<%= singular_table_name %>_path, class: ' btn btn-info'
