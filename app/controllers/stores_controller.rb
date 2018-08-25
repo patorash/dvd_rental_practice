@@ -3,7 +3,7 @@ class StoresController < ApplicationController
 
   # GET /stores
   def index
-    @stores = Store.all
+    @stores = Store.page params[:page]
   end
 
   # GET /stores/1

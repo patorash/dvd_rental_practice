@@ -3,7 +3,7 @@ class RentalsController < ApplicationController
 
   # GET /rentals
   def index
-    @rentals = Rental.all
+    @rentals = Rental.page params[:page]
   end
 
   # GET /rentals/1

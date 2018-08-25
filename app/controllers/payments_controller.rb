@@ -3,7 +3,7 @@ class PaymentsController < ApplicationController
 
   # GET /payments
   def index
-    @payments = Payment.all
+    @payments = Payment.page params[:page]
   end
 
   # GET /payments/1

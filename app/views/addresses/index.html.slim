@@ -1,6 +1,8 @@
 h1
   | addresses
 
+= link_to 'New', new_address_path, class: ' btn btn-info mb-3'
+
 table.table.table-bordered.table-striped.table-hover
   thead
     tr
@@ -35,6 +37,4 @@ table.table.table-bordered.table-striped.table-hover
                   data: {},
                   class: 'btn btn-danger')
 
-br
-
-= link_to 'New', new_address_path, class: ' btn btn-info'
+= paginate @addresses

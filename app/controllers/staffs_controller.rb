@@ -3,7 +3,7 @@ class StaffsController < ApplicationController
 
   # GET /staffs
   def index
-    @staffs = Staff.all
+    @staffs = Staff.page params[:page]
   end
 
   # GET /staffs/1

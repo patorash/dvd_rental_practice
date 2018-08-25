@@ -3,7 +3,7 @@ class LanguagesController < ApplicationController
 
   # GET /languages
   def index
-    @languages = Language.all
+    @languages = Language.page params[:page]
   end
 
   # GET /languages/1
