@@ -1,0 +1,157 @@
+h1 find系メソッドについて
+
+hr
+
+h2 目次
+
+ruby:
+  methods = %w(
+    find
+    find_by
+    find_or_initialize_by
+    find_or_create_by
+    exists?
+  )
+
+ul
+  - methods.each do |m|
+    - if m.end_with? '?'
+      li = link_to m, "##{m.gsub(/\?/, '')}"
+    - else
+      li = link_to m, "##{m}"
+
+h2#find find
+
+markdown:
+  `find`メソッドは、引数に`primary_key`を指定するメソッドです。
+
+  もし取得できなかった場合、`ActiveRecord::NotFoundException`が発生します。
+
+  例外になってもいい場合は積極的に使っていきましょう。
+
+h3 Sample
+
+pre
+  code.ruby
+    |
+      @film = Film.find params[:id]
+
+markdown:
+  1. `find_by`との違いは、**『データが存在しなければ、例外が発生する』**です。
+
+hr
+
+h2#find_by find_by
+
+markdown:
+  `find_by`メソッドは、引数に`where`メソッドと同じ条件を指定して、一番最初にヒットするものを取得するメソッドです。
+
+  取得するデータが1件のみの場合は積極的に使っていきましょう。
+
+h3 Sample
+pre
+  code.ruby
+    |
+      # idでデータを取得
+      @film = Film.find_by(id: params[:id])
+      # titleでデータを取得
+      @film = Film.find_by(title: 'Academy Dinosaur')
+      # 上記は以下と同義
+      @film = Film.where(title: 'Academy Dinosaur').first
+      # 複数条件でもOK
+      @film = Film.find_by(release_year: 2006, rental_duration: 3)
+
+markdown:
+  1. `find`との違いは、**『データが存在しなくても、例外は発生しない』**、です。
+
+  データが存在しない場合の処理は自分で実装しましょう。
+
+hr
+
+h2#find_or_initialize_by find_or_initialize_by
+
+markdown:
+  `find_or_initialize_by`メソッドは、引数に`where`メソッドと同じ条件を指定して、
+  一番最初にヒットするものを取得するメソッドですが、もしデータが存在しなかったら、そのモデルを生成します。
+
+  データはこの時点では保存されないので、保存したい場合は別途`save`メソッドを呼ぶ必要があります。
+
+h3 Sample
+pre
+  code.ruby
+    |
+      # cityでデータを取得しようとするけれど、存在しなければ生成する
+      @city = City.find_or_initialize_by(city: 'A Corua (La Corua)') do |city|
+        # ブロックで、存在しなかった場合の初期化を行う
+        city.country = Country.find 87
+      end
+      # その他の処理を行って…
+      # 保存
+      @city.save
+
+markdown:
+  1. `find_by`との違いは、**『データが存在しなければ生成する』**です。ただし、保存はしていません。
+  1. `find_or_create_by`との違いは、**『データが存在しなければ生成するが保存はしない』**です。
+
+hr
+
+h2#find_or_create_by find_or_create_by
+
+markdown:
+  `find_or_create_by`メソッドは、引数に`where`メソッドと同じ条件を指定して、
+  一番最初にヒットするものを取得するメソッドですが、もしデータが存在しなかったら、そのモデルを生成・保存します。
+
+  データはこの時点で保存されます。
+
+h3 Sample
+pre
+  code.ruby
+    |
+      # cityでデータを取得しようとするけれど、存在しなければ生成・保存する
+      @city = City.find_or_create_by(city: 'A Corua (La Corua)') do |city|
+        # ブロックで、存在しなかった場合の初期化を行う
+        city.country = Country.find 87
+      end
+
+markdown:
+  1. `find_by`との違いは、**『データが存在しなければ生成・保存する』**です。
+  1. `find_or_initialize_by`との違いは、**『保存する』**です。
+
+hr
+
+h2#exists exists?
+
+markdown:
+  `exists?`メソッドは、引数に`where`メソッドと同じ条件を指定して、データが存在するか確認するメソッドです。
+
+  Rubyのモデルオブジェクトを生成することなく、データがあるかどうかを確認することができるので、存在チェックだけでいい場合は積極的にこちらを使いましょう。
+
+h3 Sample
+pre
+  code.ruby
+    |
+      if City.exists?(city: 'A Corua (La Corua)')
+        # 処理
+      else
+        # 処理
+      end
+
+      # 上記は以下と同じ
+      if City.where(city: 'A Corua (La Corua)').exists?
+        # 処理
+      else
+        # 処理
+      end
+
+      # やっていることは同じだけれど、modelオブジェクトが生成されてしまう例
+      @city = City.find_by city: 'A Corua (La Corua)'
+      if @city.present?
+        # 処理
+      else
+        # 処理
+      end
+
+markdown:
+  1. `find_by`との違いは、**『Rubyでオブジェクトが生成されない(=メモリを節約できる)』**です。
+
+hr

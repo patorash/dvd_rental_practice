@@ -1,0 +1,64 @@
+h1 俳優別出演数
+
+table.table.table-striped
+  thead
+    tr
+      th scope='col' 俳優名
+      th scope='col' 作品数
+  tbody
+    - @count_of_actors.each do |actor, count|
+      / - actor = Actor.find actor_id
+      tr scope='row'
+        td
+          = "#{actor.first_name} #{actor.last_name}"
+        td = count
+
+hr
+
+h2 Action
+pre
+  code.ruby
+    |
+      def actor
+        @count_of_actors = Actor.joins(:films).
+            group(:actor_id).
+            order('count_actor_id DESC').
+            count(:actor_id)
+      end
+h2 View
+pre
+  code.slim
+    |
+      table.table.table-striped
+        thead
+          tr
+            th scope='col' 俳優名
+            th scope='col' 作品数
+        tbody
+          - @count_of_actors.each do |actor_id, count|
+            - actor = Actor.find actor_id
+            tr scope='row'
+              td
+                = "\#{actor.first_name} \#{actor.last_name}"
+              td = count
+h2 解説
+
+markdown:
+  今回はテーブルを結合(`INNER JOIN`)した後、
+  `group`メソッドを使って、集約関数の`GROUP BY`を実行しています。
+  Rubyで`group(:actor_id).order('count_actor_id DESC').count(:actor_id)`として、
+  出演本数の多い順に並び替えして取得しています。
+  keyに`actor_id`、valueにカウント数が入った`Hash`オブジェクトが取得されます。
+
+  今回は`joins`メソッドを使っています。`joins`メソッドはデフォルトでは`INNER JOIN`を行います。
+  `INNER JOIN`は、結合元のテーブル(左)と結合先のテーブル(右)の両方にあるカラムで、指定された条件で結合します。
+  適合するものがない場合は、結果から除外されます。
+
+  ActiveRecordではテーブルの結合方法が`joins`, `includes`, `eager_load`とあります。
+  うまく使い分けないと、処理が重くなるので気をつけましょう。
+  違いは、以下のようになります。
+
+  {:.table.table-bordered}
+  | ActiveRecordメソッド | 説明 |  |
+  | --- | --- | --- |
+  | joins | 結合したテーブルのモデルをインスタンス化*しない*。 |  |

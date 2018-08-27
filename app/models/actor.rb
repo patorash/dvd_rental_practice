@@ -14,6 +14,6 @@
 
 class Actor < ApplicationRecord
   include DvdRentalDefinition
-  has_many :film_actors, class_name: 'FilmActor'
+  has_many :film_actors, primary_key: nil
   has_many :films, through: :film_actors
 end

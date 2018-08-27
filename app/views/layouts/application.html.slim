@@ -24,6 +24,21 @@ html
       integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
       crossorigin="anonymous"
     )
+    link(
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/railscasts.min.css"
+    )
+    script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"
+    javascript:
+      document.addEventListener('turbolinks:load', function() {
+          hljs.initHighlightingOnLoad();
+      });
+      // @see https://github.com/turbolinks/turbolinks/issues/75#issuecomment-244915109
+      $(document).on('turbolinks:click', function (event) {
+          if (event.target.getAttribute('href').charAt(0) === '#') {
+              return event.preventDefault()
+          }
+      });
     = csrf_meta_tags
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'

@@ -31,7 +31,7 @@ class Film < ApplicationRecord
   include DvdRentalDefinition
 
   belongs_to :language
-  has_many :film_actors
+  has_many :film_actors, primary_key: nil
   has_many :actors, through: :film_actors
 
   has_one :film_category

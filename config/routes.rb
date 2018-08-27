@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  get 'exercises/index'
+  get 'exercises/kind_of_find'
+  get 'exercises/aggregate'
+  get 'exercises/actor'
+
   resources :stores
   resources :staffs
   resources :rentals

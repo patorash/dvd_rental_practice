@@ -1,0 +1,34 @@
+ruby:
+  exercises = []
+  exercises << OpenStruct.new(
+          title: 'find系メソッド',
+          text: '',
+          controller: 'exercises',
+          action: 'kind_of_find'
+  )
+  exercises << OpenStruct.new(
+          title: '集計関数について',
+          text: '集計関数について',
+          controller: 'exercises',
+          action: 'aggregate'
+  )
+  exercises << OpenStruct.new(
+          title: '出演俳優ランキング',
+          text: '出演俳優ランキングを出力してみます',
+          controller: 'exercises',
+          action: 'actor'
+  )
+
+
+h1 Exercises
+
+.row
+  - exercises.each do |exercise|
+    .col-sm-6
+      .card
+        .card-body
+          h5.card-title = exercise.title
+          = simple_format exercise.text, class: 'card-text' if exercise.text.present?
+          = link_to '見る',
+                  { controller: exercise.controller,
+                    action: exercise.action }, { class: 'btn btn-primary' }
