@@ -2,13 +2,13 @@ ruby:
   exercises = []
   exercises << OpenStruct.new(
           title: 'find系メソッド',
-          text: '',
+          text: %w(find find_by find_or_initialize_by find_or_create_by exists?).join(', '),
           controller: 'exercises',
           action: 'kind_of_find'
   )
   exercises << OpenStruct.new(
-          title: '集計関数について',
-          text: '集計関数について',
+          title: '集約関数について',
+          text: %w(count maximum minimum average sum).join(', '),
           controller: 'exercises',
           action: 'aggregate'
   )
@@ -25,7 +25,7 @@ h1 Exercises
 .row
   - exercises.each do |exercise|
     .col-sm-6
-      .card
+      .card.mb-4
         .card-body
           h5.card-title = exercise.title
           = simple_format exercise.text, class: 'card-text' if exercise.text.present?

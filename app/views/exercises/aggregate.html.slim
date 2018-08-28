@@ -2,76 +2,119 @@ h1 集計関数
 
 hr
 
-h2 目次
-
-ul
-  li = link_to 'count', '#count'
-
-h2#count count
-
-p Filmに保存されているデータを言語別に集計してみます。
-
-hr
-
-h3 Action
-pre
-  code.ruby
-    |
-      def language
-        @count_of_languages = Film.group(:language).count
-      end
-
-hr
-
-h3 View
-pre
-  code.slim
-    |
-      table.table.table-striped
-        thead
-          tr
-            th scope='col' 言語
-            th scope='col' 作品数
-        tbody
-          - @count_of_languages.each do |language, count|
-            tr scope='row'
-              td = language.name
-              td = count
-
-h3 結果
-
-table.table.table-striped
-  thead
-    tr
-      th scope='col' 言語
-      th scope='col' 作品数
-  tbody
-    - @count_of_languages.each do |language, count|
-      tr scope='row'
-        td = language.name
-        td = count
-
-hr
-
-h3 解説
-
 markdown:
   `group`メソッドを使って、集約関数の`GROUP BY`を実行しています。
-  Rubyで`group(:language).count`とすると、
-  keyに`Language`オブジェクト、valueにカウント数が入った`Hash`オブジェクトが取得されます。
 
   `GROUP BY`を行うと、取得できる値は`GROUP BY`で指定したカラムと、集約関数の結果のみとなります。
-  今回でいえば、`COUNT`関数の結果です。
-  集約関数には、主に以下のようなものがあります。
+
+  SQLの集約関数には、主に以下のようなものがあります。
 
   {:.table.table-bordered}
   | 集約関数 | 説明 | ActiveRecordメソッド |
   | --- | --- | --- |
   | COUNT | 指定されたカラムでグループ化された行の数をそれぞれ取得します。 | count |
-  | AVG | 指定されたカラムでグループ化された行の数値の平均をそれぞれ取得します。 | average |
-  | SUM | 指定されたカラムでグループ化された行の数値の合計をそれぞれ取得します。 | sum |
   | MAX | 指定されたカラムでグループ化された行の数値の最大値をそれぞれ取得します。 | maximum |
   | MIN | 指定されたカラムでグループ化された行の数値の最小値をそれぞれ取得します。 | minimum |
+  | AVG | 指定されたカラムでグループ化された行の数値の平均をそれぞれ取得します。 | average |
+  | SUM | 指定されたカラムでグループ化された行の数値の合計をそれぞれ取得します。 | sum |
 
-  今回はFilmの言語別本数を出そうとしたのですが、なんと全て英語のFilmという結果でした…。
+h2 目次
 
+ruby:
+  methods = %w(
+    count
+    maximum
+    minimum
+    average
+    sum
+  )
+
+= table_of_contents(methods)
+
+h2#count count
+
+markdown:
+  `count`メソッドは、対象の列がいくつあるか数えるメソッドです。
+
+pre
+  code.ruby
+    |
+      # 在庫の数を数える
+      @count_of_inventories = Inventory.count
+
+      # Film毎に在庫の数を数える
+      @count_of_film_inventories = Inventory.group(:film).order('count_all DESC').count
+
+hr
+
+h2#maximum maximum
+
+markdown:
+  `maximum`メソッドは、対象の列の最大値を取得するメソッドです。
+
+pre
+  code.ruby
+    |
+      # Paymentの中で最も大きな総額を取得する
+      @max_amount = Payment.maximum(:amount)
+
+      # Paymentで顧客毎に最も大きな総額を取得する
+      @max_amount_of_customers = Payment.group(:customer).
+          order('maximum_amount DESC').
+          maximum(:amount)
+
+hr
+
+h2#minimum minimum
+
+markdown:
+  `minimum`メソッドは、対象の列の最小値を取得するメソッドです。
+
+pre
+  code.ruby
+    |
+      # Paymentの中で最も小さな総額を取得する
+      @min_amount = Payment.minimum(:amount)
+
+      # Paymentで顧客毎に最も小さな総額を取得する
+      @min_amount_of_customers = Payment.group(:customer).
+          order('minimum_amount DESC').
+          minimum(:amount)
+
+hr
+
+h2#average average
+
+markdown:
+  `average`メソッドは、対象の列の平均値を取得するメソッドです。
+
+pre
+  code.ruby
+    |
+      # Paymentの中で総額の平均を取得する
+      @avg_amount = Payment.average(:amount)
+
+      # Paymentで顧客毎に総額の平均を取得する
+      @avg_amount_of_customers = Payment.group(:customer).
+          order('average_amount DESC').
+          average(:amount)
+
+hr
+
+h2#sum sum
+
+markdown:
+  `sum`メソッドは、対象の列の合計値を取得するメソッドです。
+
+pre
+  code.ruby
+    |
+      # Paymentの総額合計を取得する
+      @total_amount = Payment.sum(:amount)
+
+      # Paymentで顧客毎に総額合計を取得する
+      @total_amount_of_customers = Payment.group(:customer).
+          order('sum_amount DESC').
+          sum(:amount)
+
+hr

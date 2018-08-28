@@ -13,12 +13,7 @@ ruby:
     exists?
   )
 
-ul
-  - methods.each do |m|
-    - if m.end_with? '?'
-      li = link_to m, "##{m.gsub(/\?/, '')}"
-    - else
-      li = link_to m, "##{m}"
+= table_of_contents(methods)
 
 h2#find find
 
