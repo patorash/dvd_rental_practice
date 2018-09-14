@@ -1,0 +1,97 @@
+h1 大量のデータを扱う場合
+
+hr
+
+h2 目次
+
+ruby:
+  methods = %w(
+    find_each
+    find_in_batches
+  )
+
+= table_of_contents(methods)
+
+h2#find_each find_each
+
+markdown:
+  `find_each`メソッドは、大量のデータを1件ずつ扱うときに使うメソッドです。
+
+  名前の通り、`each`メソッドと同じような動作になります。
+
+  データが10万件存在する場合、`Customer.all.each`としたらどうなるでしょうか？
+
+  なんと、**Customerモデルのオブジェクトを10万個生成した後**に、eachメソッドが呼ばれます。
+
+  こうなると、**メモリを一気に10万オブジェクト分だけ消費するため、メモリ領域が足りなくなり速度低下、場合によっては止まってしまいます。**
+
+  こういうときに、`find_each`を使います。
+
+  `Customer.find_each`としたら、Customerモデルのオブジェクトをデフォルトで1,000個生成してeachメソッドを呼び、
+  その処理が終わったら次の1,000個を生成する、というふうに順々に処理していきます。
+
+  これだと、メモリを消費するのは1,000オブジェクト分だけで済み、少ないメモリでも十分処理することができます。
+  また、デフォルトで1,000個と書いていますが、1,000でもメモリが厳しい場合は100にすることも可能です。
+
+  ただし、**`find_each`メソッドは`order`が効かなくなります**ので、注意して使いましょう。
+
+h3 Sample
+
+pre
+  code.ruby
+    |
+      # 顧客を1,000件ずつ取得して処理
+      Customer.find_each do |customer|
+        # 顧客に1件ずつメールを送る処理
+        CustomerMailer.notice(customer).deliver_later
+      end
+
+      # 顧客を100件ずつ取得して処理
+      Customer.find_each(batch_size: 100) do |customer|
+        # 顧客に1件ずつメールを送る処理
+        CustomerMailer.notice(customer).deliver_later
+      end
+
+markdown:
+  1. `find_in_batches`との違いは、**『1件ずつ処理する』**です。
+  1. `Model.all.each`との違いは、メモリの使用量です。
+  1. オプション引数`batch_size`で、1度に取得するデータ量を変更できます。
+  1. 順番を指定できないので注意して使いましょう。
+
+hr
+
+h2#find_in_batches find_in_batches
+
+markdown:
+  `find_in_batches`メソッドは、大量のデータを指定件数ずつまとめて扱うときに使うメソッドです。
+
+  こちらも同じく、デフォルトで1,000件ずつ取得して処理するため、メモリに優しい仕組みになっています。
+
+  実は、`find_each`メソッドは内部で`find_in_batches`を呼び出し、その配列を`each`メソッドでループさせているだけです。
+
+  使い所がなかなか見つかりませんが、gem parallelと組み合わせて並列処理をする場合は効果的でした。
+
+h3 Sample
+pre
+  code.ruby
+    |
+      # 実質find_eachしているのと同じケース
+      Customer.find_in_batches do |customers|
+        customers.each do |customer|
+          CustomerMailer.notice(customer).deliver_later
+        end
+      end
+
+      # parallelとの組み合わせ。4並列で処理する。
+      Customer.find_in_batches do |customers|
+        Parallel.each(customers, in_process: 4) do |customer|
+          CustomerMailer.notice(customer).deliver_later
+        end
+      end
+
+markdown:
+  1. `find_each`との違いは、**『1件ずつではなく、まとまったデータを処理する』**、です。
+  1. オプション引数`batch_size`で、1度に取得するデータ量を変更できます。
+  1. 順番を指定できないので注意して使いましょう。
+
+hr

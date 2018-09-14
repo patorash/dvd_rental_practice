@@ -31,7 +31,9 @@ html
     script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"
     javascript:
       document.addEventListener('turbolinks:load', function() {
-          hljs.initHighlightingOnLoad();
+          $('pre code').each(function (i, block) {
+              hljs.highlightBlock(block);
+          });
       });
       // @see https://github.com/turbolinks/turbolinks/issues/75#issuecomment-244915109
       $(document).on('turbolinks:click', function (event) {
@@ -45,6 +47,10 @@ html
   body
     nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
       = link_to 'DVD Rental', root_path, class: 'navbar-brand'
+      .collapse.navbar-collapse
+        ul.navbar-nav.mr-auto
+          li.nav-item class=('active' if current_page?(root_path))
+            = link_to 'Exercises', root_path, class: 'nav-link'
 
     .container-fluid
       .row

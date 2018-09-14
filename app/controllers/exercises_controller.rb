@@ -1,4 +1,8 @@
 class ExercisesController < ApplicationController
+  before_action do
+    console
+  end
+
   def index
   end
 
@@ -6,7 +10,9 @@ class ExercisesController < ApplicationController
   end
 
   def aggregate
-    @count_of_languages = Film.group(:language).count
+  end
+
+  def howto_many_data
   end
 
   def actor
