@@ -6,8 +6,8 @@ table.table.table-striped
       th scope='col' 俳優名
       th scope='col' 作品数
   tbody
-    - @count_of_actors.each do |actor, count|
-      / - actor = Actor.find actor_id
+    - @count_of_actors.each do |actor_id, count|
+      - actor = Actor.find actor_id
       tr scope='row'
         td
           = "#{actor.first_name} #{actor.last_name}"
@@ -53,12 +53,3 @@ markdown:
   今回は`joins`メソッドを使っています。`joins`メソッドはデフォルトでは`INNER JOIN`を行います。
   `INNER JOIN`は、結合元のテーブル(左)と結合先のテーブル(右)の両方にあるカラムで、指定された条件で結合します。
   適合するものがない場合は、結果から除外されます。
-
-  ActiveRecordではテーブルの結合方法が`joins`, `includes`, `eager_load`とあります。
-  うまく使い分けないと、処理が重くなるので気をつけましょう。
-  違いは、以下のようになります。
-
-  {:.table.table-bordered}
-  | ActiveRecordメソッド | 説明 |  |
-  | --- | --- | --- |
-  | joins | 結合したテーブルのモデルをインスタンス化*しない*。 |  |

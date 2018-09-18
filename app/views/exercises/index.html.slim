@@ -13,10 +13,16 @@ ruby:
           action: 'aggregate'
   )
   exercises << OpenStruct.new(
-          title: '大量のデータを扱う場合',
+          title: '大量のデータを扱う',
           text: %w(find_each find_in_batches).join(', '),
           controller: 'exercises',
           action: 'handle_many_data'
+  )
+  exercises << OpenStruct.new(
+          title: 'テーブルの連結',
+          text: %w(joins includes preload eager_load).join(', '),
+          controller: 'exercises',
+          action: 'handle_join'
   )
   exercises << OpenStruct.new(
           title: '出演俳優ランキング',

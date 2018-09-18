@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   get 'exercises/kind_of_find'
   get 'exercises/aggregate'
   get 'exercises/handle_many_data'
+  get 'exercises/handle_join'
   get 'exercises/actor'
 
   resources :stores

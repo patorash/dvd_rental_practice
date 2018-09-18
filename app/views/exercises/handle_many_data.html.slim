@@ -1,4 +1,4 @@
-h1 大量のデータを扱う場合
+h1 大量のデータを扱う
 
 hr
 
@@ -8,6 +8,7 @@ ruby:
   methods = %w(
     find_each
     find_in_batches
+    in_batches
   )
 
 = table_of_contents(methods)
@@ -93,5 +94,29 @@ markdown:
   1. `find_each`との違いは、**『1件ずつではなく、まとまったデータを処理する』**、です。
   1. オプション引数`batch_size`で、1度に取得するデータ量を変更できます。
   1. 順番を指定できないので注意して使いましょう。
+
+hr
+
+h2#in_batches in_batches
+
+markdown:
+  `in_batches`メソッドは、Rails5から加わった、大量のデータを指定件数ずつまとめて扱うときに使うメソッドです。
+
+  `find_in_batches`メソッドは、ブロックに渡されるデータが配列になっているのに対して、
+  `in_batches`メソッドは、`ActiveRecord::Relation`オブジェクトが渡されます。
+
+  そのため、`delete_all`や`update_all`などのメソッドを使うことができます。
+
+h3 Sample
+pre
+  code.ruby
+    |
+      Customer.in_batches do |customers|
+        customers.update_all(activebool: true)
+      end
+
+markdown:
+  1. `find_in_batches`との違いは、**『配列ではなく、ActiveRecord::Relationで取得』**、です。
+  1. オプション引数`of`で、1度に取得するデータ量を変更できます。
 
 hr

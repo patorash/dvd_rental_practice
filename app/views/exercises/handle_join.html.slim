@@ -1,0 +1,302 @@
+h1 テーブルの連結系
+
+hr
+
+markdown:
+  ActiveRecordで内部結合・外部結合を行なっていきます。
+
+  内部結合は`INNER JOIN`があります。
+
+  外部結合は、
+
+  * `LEFT OUTER JOIN`
+  * `FULL OUTER JOIN`
+  * `CROSS JOIN`
+
+  などがありますが、Railsでは`LEFT OUTER JOIN`を使っていくことになります。
+
+  {:.table.table-bordered}
+  |  | 説明 | ActiveRecordのメソッド名 |
+  | --- | --- | --- |
+  | INNER JOIN | テーブルを結合する際、結合条件から外れるデータは除外される。 | joins, joins+eager_load |
+  | LEFT OUTER JOIN | テーブルを結合する際、結合条件から外れるデータであっても、左側のテーブルのデータは残る | left_outer_joins, eager_load, includes+references |
+  | FULL OUTER JOIN | テーブルを結合する際、結合条件から外れるデータであっても全て残る |  |
+  | CROSS JOIN | 全てのデータ同士で連結する。10行のAテーブルと5行のBテーブルをCROSS JOINすると、50行のデータとなる |  |
+
+h2 目次
+
+ruby:
+  methods = %w(
+    joins
+    left_outer_joins
+    includes
+    preload
+    eager_load
+    includes+references
+    joins+eager_load
+  )
+
+= table_of_contents(methods)
+
+h2#find_each joins
+
+markdown:
+  `joins`メソッドは、`INNER JOIN`でテーブルを連結します。
+
+  その結果、`where`メソッドで絞り込み条件として連結先のテーブルのカラムを指定できるようになります。
+
+  ただし、指定した先のテーブルのデータはインスタンス化されないため、関連データにアクセスすると、その都度SQLが発行されます。
+
+  使い所は、
+
+  * 最初に指定したModelのデータのみ使う
+  * しかし、絞り込み条件に他のテーブルのデータを使いたい
+
+  になります。
+
+  `INNER JOIN`(内部結合)での連結になるので、どちらにもあるデータで絞り込まれます。
+
+  usersテーブルが以下のようにあったとします。
+
+  {:.table.table-bordered}
+  | id | division_id | name |
+  | --- | --- | --- |
+  | 1 | 1 | 田中 |
+  | 2 | 1 | 佐藤 |
+  | 3 | 2 | 児嶋 |
+  | 4 | 2 | 鈴木 |
+  | 5 | 3 | 金子 |
+
+  これに対して、以下のようなdivisionsテーブルがあったとして、
+
+  {:.table.table-bordered}
+  | id | name |
+  | --- | --- |
+  | 1 | 開発部 |
+  | 2 | 営業部 |
+  | 4 | 企画部 |
+
+  これらを内部結合すると…
+
+pre
+  code.sql
+    |
+      SELECT *
+      FROM users
+        INNER JOIN divisions ON users.division_id = divisions.id
+
+markdown:
+
+  以下のようになります。
+
+  {:.table.table-bordered}
+  | users.id | users.division_id | users.name | divisions.id | divisions.name |
+  | --- | --- | --- | --- | --- |
+  | 1 | 1 | 田中 | 1 | 開発部 |
+  | 2 | 1 | 佐藤 | 1 | 開発部 |
+  | 3 | 2 | 児嶋 | 2 | 営業部 |
+  | 4 | 2 | 鈴木 | 2 | 営業部 |
+
+  * division_idがdivisionsテーブルに存在しなかった金子さんは除外される
+  * 企画部の人はusersテーブルにはいなかったので企画部は除外される
+
+h3 Sample
+
+pre
+  code.ruby
+    |
+      # 英語の作品だけを取得する。
+      @films = Film.joins(:language).
+                 where(language: { name: 'English' })
+
+markdown:
+  1. 他のテーブル結合系メソッドとの違いは、**『関連先のデータをインスタンス化しない』**です。
+  1. 関連先のデータをインスタンス化しないため、メモリ使用量が少なくて済みます。
+  1. 関連先のデータにアクセスするのであれば、`joins`を使うのはやめましょう。
+
+hr
+
+h2#left_outer_joins left_outer_joins
+
+markdown:
+  `left_outer_joins`メソッドは、`LEFT OUTER JOIN`でテーブルを連結します。
+
+  その結果、`where`メソッドで絞り込み条件として連結先のテーブルのカラムを指定できるようになります。
+
+  ただし、指定した先のテーブルのデータはインスタンス化されないため、関連データにアクセスすると、その都度SQLが発行されます。
+
+  `INNER JOIN`と違い、元になっているテーブル(左)に外部結合として連結するため、右側のテーブルに左側との結合データがなくても、
+  左側のテーブルデータは取得されます。
+
+  先ほどの例であげたデータを外部結合で連結した場合、
+
+pre
+  code.sql
+    |
+      SELECT *
+      FROM users
+        LEFT OUTER JOIN divisions ON users.division_id = divisions.id
+
+markdown:
+
+  以下のようになります。
+
+  {:.table.table-bordered}
+  | users.id | users.division_id | users.name | divisions.id | divisions.name |
+  | --- | --- | --- | --- | --- |
+  | 1 | 1 | 田中 | 1 | 開発部 |
+  | 2 | 1 | 佐藤 | 1 | 開発部 |
+  | 3 | 2 | 児嶋 | 2 | 営業部 |
+  | 4 | 2 | 鈴木 | 2 | 営業部 |
+  | 5 | 3 | 金子 |   |      |
+
+
+  * division_idがdivisionsテーブルに存在しなくても、左側のテーブル(users)のデータは保持
+  * 存在しないデータにはNULLが入る
+
+h3 Sample
+pre
+  code.ruby
+    |
+      # 2007年4月1日以降のレンタルの有無に関係なく顧客情報を取得してレンタル回数をカウント
+      @rental_counts = Customer.left_outer_join(:payments).
+                         where('payment.payment_date > ?', Date.new(2007,4,1)).
+                         group(:customer_id).
+                         count
+
+markdown:
+  1. 他のテーブル結合系メソッドとの違いは、**『関連先のデータをインスタンス化しない』**です。
+  1. 外部結合のため、起点になっているテーブルデータは残ります。
+  1. 関連先のデータをインスタンス化しないため、メモリ使用量が少なくて済みます。
+  1. 関連先のデータにアクセスするのであれば、`left_outer_joins`を使うのはやめましょう。
+
+hr
+
+h2#includes includes
+
+markdown:
+  `includes`メソッドは、JOINをせずに複数回クエリを発行することでデータをロードします。
+
+  データが大量にあるテーブル同士を連結すると、パフォーマンスが出ないときがあります。
+
+  そういう場合は、それぞれ個別にクエリを発行してロードしたほうがよい場合がありますので、JOINにこだわり過ぎないようにしましょう。
+
+  ただし、`includes`メソッドは他のメソッドと組み合わせると結果が異なるので注意しましょう。
+
+h3 Sample
+
+pre
+  code.ruby
+    |
+      # 顧客IDの1〜10までのデータと、その支払い情報を取得する
+      @customers = Customer.includes(:payments).where(customer_id: 1..10)
+
+pre
+  code
+    |
+      Customer Load (4.2ms)  SELECT "customer".* FROM "customer" WHERE ("customer"."customer_id" BETWEEN $1 AND $2)  [["customer_id", 1], ["customer_id", 10]]
+      Payment Load (3.9ms)  SELECT "payment".* FROM "payment" WHERE "payment"."customer_id" IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+
+markdown:
+  1. テーブルを結合せずに少ない回数のクエリでデータをキャッシュします。
+  1. データが呼ばれる度にクエリが発行されるわけではないので、パフォーマンスがよいです。
+  1. 関連先のデータをインスタンス化します。
+
+h2#preload preload
+
+markdown:
+  `preload`メソッドは、`includes`メソッドと同じ結果になります。
+
+h2#eager_load eager_load
+
+markdown:
+  `eager_load`メソッドは、`LEFT OUTER JOIN`で外部結合してデータをロードします。
+
+  クエリが1回で済むので、関連データがある場合は積極的に使っていきましょう。
+
+  ただし、大きなテーブル同士の連結を行うとパフォーマンスが悪い場合があります。
+
+  その場合は、外部結合を避けて`preload`メソッドを使ってみましょう。
+
+h3 Sample
+
+pre
+  code.ruby
+    |
+      # 外部結合で顧客データと、その支払い情報を取得する
+      @customers = Customer.eager_load(:payments)
+
+pre
+  code
+    |
+      SQL (144.3ms)  SELECT "customer"."customer_id" AS t0_r0, "customer"."store_id" AS t0_r1,
+      "customer"."first_name" AS t0_r2, "customer"."last_name" AS t0_r3, "customer"."email" AS t0_r4,
+      "customer"."address_id" AS t0_r5, "customer"."activebool" AS t0_r6, "customer"."create_date" AS t0_r7,
+      "customer"."last_update" AS t0_r8, "customer"."active" AS t0_r9, "payment"."payment_id" AS t1_r0,
+      "payment"."customer_id" AS t1_r1, "payment"."staff_id" AS t1_r2, "payment"."rental_id" AS t1_r3,
+      "payment"."amount" AS t1_r4, "payment"."payment_date" AS t1_r5 FROM "customer"
+      LEFT OUTER JOIN "payment" ON "payment"."customer_id" = "customer"."customer_id"
+
+markdown:
+  1. テーブルを外部結合して、1回のクエリでデータをキャッシュします。
+  1. データが呼ばれる度にクエリが発行されるわけではないので、パフォーマンスがよいです。
+  1. 関連先のデータをインスタンス化します。
+  1. 大量のデータがあるテーブルを連結すると逆にパフォーマンスが落ちる場合があります。
+  1. そういう場合は`preload`を使いましょう。
+
+h2 id="includes+references" includes+references
+
+markdown:
+  `includes+references`は、`eager_load`メソッドと同じ結果になります。
+
+  記述も長いので、`eager_load`を使えばいいと思います。
+
+h3 Sample
+
+pre
+  code.ruby
+    |
+      # 外部結合で顧客データと、その支払い情報を取得する
+      @customers = Customer.includes(:payments).references(:payments)
+
+pre
+  code
+    |
+      SQL (144.3ms)  SELECT "customer"."customer_id" AS t0_r0, "customer"."store_id" AS t0_r1,
+      "customer"."first_name" AS t0_r2, "customer"."last_name" AS t0_r3, "customer"."email" AS t0_r4,
+      "customer"."address_id" AS t0_r5, "customer"."activebool" AS t0_r6, "customer"."create_date" AS t0_r7,
+      "customer"."last_update" AS t0_r8, "customer"."active" AS t0_r9, "payment"."payment_id" AS t1_r0,
+      "payment"."customer_id" AS t1_r1, "payment"."staff_id" AS t1_r2, "payment"."rental_id" AS t1_r3,
+      "payment"."amount" AS t1_r4, "payment"."payment_date" AS t1_r5 FROM "customer"
+      LEFT OUTER JOIN "payment" ON "payment"."customer_id" = "customer"."customer_id"
+
+h2 id="joins+eager_load" joins+eager_load
+
+markdown:
+  `joins+eager_load`は、`INNER JOIN`で内部結合してデータをロードします。
+
+h3 Sample
+
+pre
+  code.ruby
+    |
+      # 内部結合で顧客データと、その支払い情報を取得する
+      @customers = Customer.joins(:payments).eager_load(:payments)
+
+pre
+  code
+    |
+      SQL (158.1ms)  SELECT "customer"."customer_id" AS t0_r0, "customer"."store_id" AS t0_r1,
+      "customer"."first_name" AS t0_r2, "customer"."last_name" AS t0_r3, "customer"."email" AS t0_r4,
+      "customer"."address_id" AS t0_r5, "customer"."activebool" AS t0_r6, "customer"."create_date" AS t0_r7,
+      "customer"."last_update" AS t0_r8, "customer"."active" AS t0_r9, "payment"."payment_id" AS t1_r0,
+      "payment"."customer_id" AS t1_r1, "payment"."staff_id" AS t1_r2, "payment"."rental_id" AS t1_r3,
+      "payment"."amount" AS t1_r4, "payment"."payment_date" AS t1_r5 FROM "customer"
+      INNER JOIN "payment" ON "payment"."customer_id" = "customer"."customer_id"
+
+markdown:
+  1. テーブルを内部結合して、1回のクエリでデータをキャッシュします。
+  1. データが呼ばれる度にクエリが発行されるわけではないので、パフォーマンスがよいです。
+  1. 関連先のデータをインスタンス化します。
+  1. 大量のデータがあるテーブルを連結すると逆にパフォーマンスが落ちる場合があります。
+  1. そういう場合は`preload`を使いましょう。
